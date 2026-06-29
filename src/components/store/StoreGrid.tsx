@@ -27,7 +27,7 @@ export function StoreGrid({ products }: { products: Product[] }) {
   ];
 
   return (
-    <div className="reveal-up">
+    <div>
       <div className="mb-6 flex flex-wrap gap-2">
         {tabs.map((tab) => {
           const active = category === tab.id;

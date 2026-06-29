@@ -10,7 +10,7 @@ export async function Header() {
   return (
     <header className="hardware-panel sticky top-0 z-50 border-b border-[var(--color-border)] border-b-[var(--color-accent)]/30 bg-[var(--color-panel)]/95 text-[var(--color-surface)] backdrop-blur-md">
       <div className="container-main flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="group shrink-0 reveal-up">
+        <Link href="/" className="group shrink-0">
           <span className="font-display text-lg leading-none text-[var(--color-surface)] transition-opacity group-hover:opacity-90">
             {settings.name}
           </span>

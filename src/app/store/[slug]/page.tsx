@@ -119,11 +119,11 @@ export default async function ProductPage({ params }: Props) {
               <div className="mt-5">
                 <VariantSelector product={product} />
               </div>
-              <p className="mt-5 line-clamp-6 text-sm leading-relaxed lg:text-base">
+              <p className="mt-5 text-sm leading-relaxed lg:text-base">
                 {product.description}
               </p>
               {product.specs.length > 0 && (
-                <div className="mt-8">
+                <div className="buy-panel-section mt-8">
                   <h2 className="manual-label mb-3 text-[var(--color-subtle)]">
                     Specifications
                   </h2>
@@ -138,7 +138,7 @@ export default async function ProductPage({ params }: Props) {
                 </div>
               )}
               {product.audioDemos.length > 0 && (
-                <div className="mt-8">
+                <div className="buy-panel-section mt-8">
                   <h2 className="manual-label mb-3 text-[var(--color-subtle)]">
                     Signal tests
                   </h2>

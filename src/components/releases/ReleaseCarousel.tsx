@@ -17,7 +17,7 @@ export function ReleaseCarousel({ releases }: { releases: Release[] }) {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
-    <div className="relative reveal-up">
+    <div className="relative">
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex gap-4">
           {releases.map((release) => (

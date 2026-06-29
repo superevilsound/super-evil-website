@@ -29,9 +29,14 @@ export default async function HomePage() {
             eyebrow="News"
             title="Latest News"
             action={
-              <Button href="/news" variant="outline">
-                See More News
-              </Button>
+              <div className="flex flex-wrap items-center gap-2">
+                <Button href="/store" variant="accent" size="sm">
+                  Shop Pedals
+                </Button>
+                <Button href="/news" variant="outline" size="sm">
+                  See More News
+                </Button>
+              </div>
             }
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

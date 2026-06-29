@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/format";
 
 export function NewsCard({ post }: { post: NewsPost }) {
   return (
-    <article className="catalog-card group reveal-up">
+    <article className="catalog-card group">
       <Link href={`/news/${post.slug}`} className="block">
         <div className="catalog-frame relative m-2 aspect-[4/3] overflow-hidden md:aspect-[16/10]">
           <Image
