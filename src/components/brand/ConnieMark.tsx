@@ -1,29 +1,29 @@
 import Image from "next/image";
+import {
+  CONNIE_BLACK,
+  CONNIE_DIMENSIONS,
+  CONNIE_WHITE,
+} from "@/lib/brand-assets";
 import { cn } from "@/lib/utils";
 
-type ConnieVariant = "watermark-dark" | "sticker-light" | "hero" | "boot";
+type ConnieVariant = "watermark-dark" | "sticker-light" | "boot";
 
 const config: Record<
   ConnieVariant,
-  { src: string; alt: string; sizes: string }
+  { src: typeof CONNIE_WHITE | typeof CONNIE_BLACK; alt: string; sizes: string }
 > = {
   "watermark-dark": {
-    src: "/super-evil-mascot.svg",
+    src: CONNIE_WHITE,
     alt: "",
     sizes: "480px",
   },
   "sticker-light": {
-    src: "/connie-black.svg",
+    src: CONNIE_BLACK,
     alt: "",
     sizes: "200px",
   },
-  hero: {
-    src: "/super-evil-mascot.svg",
-    alt: "Connie",
-    sizes: "(max-width:768px) 55vw, 420px",
-  },
   boot: {
-    src: "/super-evil-mascot.svg",
+    src: CONNIE_WHITE,
     alt: "",
     sizes: "80px",
   },
@@ -45,8 +45,8 @@ export function ConnieMark({
     <Image
       src={src}
       alt={alt}
-      width={688}
-      height={559}
+      width={CONNIE_DIMENSIONS.width}
+      height={CONNIE_DIMENSIONS.height}
       sizes={sizes}
       priority={priority}
       aria-hidden={decorative}

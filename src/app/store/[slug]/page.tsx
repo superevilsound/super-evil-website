@@ -11,7 +11,6 @@ import { AddToCartButton } from "@/components/store/AddToCartButton";
 import { VariantSelector } from "@/components/store/VariantSelector";
 import { ProductCard } from "@/components/store/ProductCard";
 import { Badge, SectionTitle } from "@/components/ui/button";
-import { ConnieMark } from "@/components/brand/ConnieMark";
 import { JsonLd, productJsonLd } from "@/components/seo/JsonLd";
 import type { Metadata } from "next";
 
@@ -83,13 +82,6 @@ export default async function ProductPage({ params }: Props) {
                       : "aspect-square"
                   } ${isHardware || isHero ? "bg-[var(--color-panel)]" : "bg-[var(--color-surface-muted)]"}`}
                 >
-                  {isHero && isHardware && (
-                    <ConnieMark
-                      variant="hero"
-                      className="absolute -right-4 bottom-2 z-10 w-32 opacity-70 md:w-40"
-                      priority
-                    />
-                  )}
                   <div className="catalog-frame relative h-full min-h-[280px] w-full overflow-hidden">
                     <Image
                       src={img}

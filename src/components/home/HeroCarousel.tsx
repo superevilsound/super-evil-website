@@ -51,12 +51,6 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-panel)] via-[var(--color-panel)]/90 to-[var(--color-panel)]/55" />
                 <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,11,9,0.85)_0%,rgba(11,11,9,0.35)_55%,transparent_100%)]" />
 
-                <ConnieMark
-                  variant="hero"
-                  priority={index === 0}
-                  className="sticker-in absolute -right-[8%] bottom-[12%] z-[5] w-[min(58vw,22rem)] opacity-90 md:-right-[2%] md:bottom-[8%] md:w-[min(42vw,26rem)]"
-                />
-
                 <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between px-4 pt-5 sm:px-6 sm:pt-6 md:px-10 md:pt-8">
                   <div>
                     <ConnieMark
