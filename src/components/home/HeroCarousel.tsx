@@ -8,15 +8,82 @@ import type { HeroSlide } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/button";
 import { ConnieMark } from "@/components/brand/ConnieMark";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+function HeroSlideBackground({
+  slide,
+  isActive,
+  priority,
+}: {
+  slide: HeroSlide;
+  isActive: boolean;
+  priority?: boolean;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !slide.video) return;
+
+    if (isActive) {
+      video.play().catch(() => {});
+      return;
+    }
+
+    video.pause();
+    video.currentTime = 0;
+  }, [isActive, slide.video]);
+
+  if (slide.video) {
+    return (
+      <video
+        ref={videoRef}
+        src={slide.video}
+        poster={slide.image}
+        muted
+        loop
+        playsInline
+        preload={priority ? "auto" : "metadata"}
+        aria-hidden
+        className="hero-drift h-full w-full object-cover opacity-70"
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={slide.image}
+      alt=""
+      fill
+      className="hero-drift object-cover opacity-70"
+      priority={priority}
+      sizes="100vw"
+    />
+  );
+}
 
 export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 6000 }),
   ]);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi]);
 
   const tickerItems = useMemo(
     () =>
@@ -38,13 +105,10 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
             <div key={slide._id} className="relative min-w-0 flex-[0_0_100%]">
               <div className="relative min-h-[70vh] w-full md:min-h-[75vh]">
                 <div className="absolute inset-0 overflow-hidden">
-                  <Image
-                    src={slide.image}
-                    alt=""
-                    fill
-                    className="hero-drift object-cover opacity-70"
+                  <HeroSlideBackground
+                    slide={slide}
+                    isActive={index === selectedIndex}
                     priority={index === 0}
-                    sizes="100vw"
                   />
                 </div>
                 <div className="absolute inset-0 bg-[var(--color-accent)]/10 mix-blend-multiply" />

@@ -12,6 +12,21 @@ import type {
 const img = (id: string, w = 1200) =>
   `https://images.unsplash.com/${id}?q=80&w=${w}&auto=format&fit=crop`;
 
+const catatoneyaHero = "/artists/catatoneya/hero.jpg";
+const catatoneyaGallery = [
+  "/artists/catatoneya/live-01.jpg",
+  "/artists/catatoneya/live-02.jpg",
+  "/artists/catatoneya/live-03.jpg",
+  "/artists/catatoneya/live-04.jpg",
+  "/artists/catatoneya/live-05.jpg",
+  "/artists/catatoneya/social-01.jpg",
+  "/artists/catatoneya/social-02.jpg",
+  "/artists/catatoneya/social-03.jpg",
+] as const;
+
+const xulaHero = "/artists/xula/hero.jpg";
+const xulaGallery = ["/artists/xula/portrait-01.jpg"] as const;
+
 export const siteSettings: SiteSettings = {
   name: "Super Evil",
   slogan: "Super Evil Sound, Devilish Performance",
@@ -65,12 +80,8 @@ export const artists: Artist[] = [
     name: "Catatoneya",
     slug: "catatoneya",
     featured: true,
-    heroImage: img("photo-1511671782779-c97d3d27a1d4"),
-    gallery: [
-      img("photo-1459749411175-04bf5292ceea"),
-      img("photo-1501386761578-eac5c94b800a"),
-      img("photo-1492684223066-81342ee5ff30"),
-    ],
+    heroImage: catatoneyaHero,
+    gallery: [...catatoneyaGallery],
     shortBio:
       "Textural dream-pop meets tape-saturated noise. Catatoneya crafts hazy anthems from Pittsburgh basements and late-night sessions.",
     socials: { instagram: "#", x: "#", youtube: "#", bandcamp: "#" },
@@ -97,8 +108,8 @@ export const artists: Artist[] = [
     name: "Xula",
     slug: "xula",
     featured: true,
-    heroImage: img("photo-1515942400420-2b98fed1f515"),
-    gallery: [img("photo-1483412033650-1015ddeb83d1")],
+    heroImage: xulaHero,
+    gallery: [...xulaGallery],
     shortBio:
       "Ethereal vocals over glitchy percussion; Xula is the quiet storm.",
     socials: { instagram: "#", x: "#", youtube: "#", bandcamp: "#" },
@@ -131,7 +142,7 @@ export const releases: Release[] = [
     title: "Silver Verb / Night Bloom",
     slug: "silver-verb-night-bloom",
     artist: { _id: "artist-xula", name: "Xula", slug: "xula" },
-    coverArt: img("photo-1495567720989-cebdbdd97913"),
+    coverArt: xulaHero,
     releaseDate: "2025-11-08",
     streamingLinks: { spotify: "https://open.spotify.com/album/example" },
     description: "Latest single from Xula.",
@@ -141,7 +152,7 @@ export const releases: Release[] = [
     title: "Cicada Drive",
     slug: "cicada-drive",
     artist: { _id: "artist-catatoneya", name: "Catatoneya", slug: "catatoneya" },
-    coverArt: img("photo-1470225620780-dba8ba36b745"),
+    coverArt: "/artists/catatoneya/live-02.jpg",
     releaseDate: "2025-09-21",
     streamingLinks: { spotify: "https://open.spotify.com/album/example" },
   },
@@ -232,7 +243,7 @@ export const events: Event[] = [
       _id: "artist-xula",
       name: "Xula",
       slug: "xula",
-      heroImage: img("photo-1515942400420-2b98fed1f515", 400),
+      heroImage: xulaHero,
     },
     title: "Night Bloom Live",
     venue: "Glassland",
@@ -247,7 +258,7 @@ export const events: Event[] = [
       _id: "artist-catatoneya",
       name: "Catatoneya",
       slug: "catatoneya",
-      heroImage: img("photo-1511671782779-c97d3d27a1d4"),
+      heroImage: catatoneyaHero,
     },
     title: "Cicada Drive Release Show",
     venue: "Mr Roboto Project",
@@ -276,7 +287,7 @@ export const newsPosts: NewsPost[] = [
     title: "New single from Xula out now",
     slug: "xula-night-bloom-out-now",
     publishedAt: "2025-11-08",
-    heroImage: img("photo-1495567720989-cebdbdd97913"),
+    heroImage: xulaHero,
     excerpt: "Stream 'Night Bloom' on your favorite platform.",
     body: "Xula's new single 'Night Bloom' is out now across all streaming platforms.",
     relatedArtistSlug: "xula",
@@ -299,7 +310,7 @@ export const heroSlides: HeroSlide[] = [
     _id: "hero-1",
     artistName: "XULA",
     title: "SILVER VERB / NIGHT BLOOM",
-    image: img("photo-1495567720989-cebdbdd97913"),
+    image: xulaHero,
     statusLabel: "Out Now",
     ctaLabel: "Listen",
     ctaHref: "/artists/xula",
@@ -310,6 +321,7 @@ export const heroSlides: HeroSlide[] = [
     title: "FUZZ PEDAL",
     subtitle: "Preorder open",
     image: img("photo-1511379938547-c1f69419868d"),
+    video: "/videos/float-test.mov",
     statusLabel: "Preorder",
     ctaLabel: "Order",
     ctaHref: "/store/fuzz-pedal",
@@ -318,7 +330,7 @@ export const heroSlides: HeroSlide[] = [
     _id: "hero-3",
     artistName: "CATATONEYA",
     title: "CICADA DRIVE",
-    image: img("photo-1470225620780-dba8ba36b745"),
+    image: catatoneyaHero,
     statusLabel: "Out Now",
     ctaLabel: "Listen",
     ctaHref: "/artists/catatoneya",

@@ -117,7 +117,10 @@ export interface HeroSlide {
   artistName: string;
   title: string;
   subtitle?: string;
+  /** Poster / fallback image for image slides and video posters. */
   image: string;
+  /** Optional background video (mp4 recommended; mov has limited browser support). */
+  video?: string;
   statusLabel: string;
   ctaLabel: string;
   ctaHref: string;
