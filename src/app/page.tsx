@@ -23,34 +23,47 @@ export default async function HomePage() {
   return (
     <>
       <HeroCarousel slides={slides} />
-      <section className="py-[var(--section-py)]">
-        <div className="container-main">
+      <section className="visual-module visual-module--cream">
+        <div className="container-main reveal-up">
           <SectionTitle
             eyebrow="News"
             title="Latest News"
             action={
-              <Button href="/news" variant="ghost">
+              <Button href="/news" variant="outline">
                 See More News
               </Button>
             }
           />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {news.map((post) => (
-              <NewsCard key={post._id} post={post} />
+            {news.map((post, i) => (
+              <div
+                key={post._id}
+                className={
+                  i % 3 === 1
+                    ? "reveal-up reveal-up-delay-1"
+                    : i % 3 === 2
+                      ? "reveal-up reveal-up-delay-2"
+                      : "reveal-up"
+                }
+              >
+                <NewsCard post={post} />
+              </div>
             ))}
           </div>
         </div>
       </section>
-      <section className="border-t border-[var(--color-border)] bg-[var(--color-surface-muted)] py-[var(--section-py)]">
-        <div className="container-main">
+      <section className="visual-module visual-module--dark grain-overlay border-y border-[var(--color-border)]">
+        <div className="container-main reveal-up">
           <SectionTitle eyebrow="Releases" title="Recent Releases" />
           <ReleaseCarousel releases={releases} />
         </div>
       </section>
-      <section className="py-[var(--section-py)]">
-        <div className="container-main">
+      <section className="visual-module visual-module--muted">
+        <div className="container-main reveal-up">
           <SectionTitle title="Join Our Mailing List" />
-          <NewsletterForm copy={settings.newsletterCopy} />
+          <div className="mx-auto max-w-xl">
+            <NewsletterForm copy={settings.newsletterCopy} />
+          </div>
         </div>
       </section>
     </>

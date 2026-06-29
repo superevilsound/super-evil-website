@@ -66,32 +66,42 @@ export default async function ProductPage({ params }: Props) {
         <p className="signal-label mb-6">Signal acquired // Product module</p>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="reveal-up space-y-5">
-            {product.images.map((img, i) => (
-              <div
-                key={img}
-                className={`product-plate relative aspect-square overflow-hidden rounded-sm p-3 ${
-                  isHardware || i === 0 ? "bg-[var(--color-panel)]" : "bg-[var(--color-surface-muted)]"
-                }`}
-              >
-                <div className="catalog-frame relative h-full w-full overflow-hidden">
-                  <Image
-                    src={img}
-                    alt={`${product.title} ${i + 1}`}
-                    fill
-                    className="object-cover transition-transform duration-700 hover:scale-[1.03]"
-                    priority={i === 0}
-                    sizes="(max-width:1024px) 100vw, 50vw"
-                  />
+            {product.images.map((img, i) => {
+              const isHero = i === 0;
+              return (
+                <div
+                  key={img}
+                  className={`product-plate relative overflow-hidden rounded-sm p-3 ${
+                    isHero
+                      ? "product-plate-hero grain-overlay scanline-overlay"
+                      : "aspect-square"
+                  } ${isHardware || isHero ? "bg-[var(--color-panel)]" : "bg-[var(--color-surface-muted)]"}`}
+                >
+                  <div className="catalog-frame relative h-full min-h-[280px] w-full overflow-hidden">
+                    <Image
+                      src={img}
+                      alt={`${product.title} ${i + 1}`}
+                      fill
+                      className={`object-cover ${isHero ? "hero-drift" : "transition-transform duration-700 hover:scale-[1.03]"}`}
+                      priority={isHero}
+                      sizes="(max-width:1024px) 100vw, 50vw"
+                    />
+                  </div>
+                  {isHero && isHardware && (
+                    <span className="manual-label absolute bottom-6 left-6 z-10 text-[var(--color-led)]">
+                      Hardware plate // 01
+                    </span>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="buy-module reveal-up reveal-up-delay-1">
-            <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-sm md:p-6 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
+            <div className="buy-panel">
               <p className="manual-label text-[var(--color-subtle)]">
                 {productTypeLabel(product.type)}
               </p>
-              <h1 className="font-display mt-1 text-3xl leading-tight text-[var(--color-ink)] md:text-4xl">
+              <h1 className="font-display mt-1 text-3xl leading-tight md:text-4xl">
                 {product.title}
               </h1>
               <p className="manual-label mt-2 text-[var(--color-subtle)]">
@@ -109,7 +119,7 @@ export default async function ProductPage({ params }: Props) {
               <div className="mt-5">
                 <VariantSelector product={product} />
               </div>
-              <p className="mt-5 line-clamp-6 text-sm leading-relaxed text-[var(--color-ink)] lg:text-base">
+              <p className="mt-5 line-clamp-6 text-sm leading-relaxed lg:text-base">
                 {product.description}
               </p>
               {product.specs.length > 0 && (
@@ -147,7 +157,7 @@ export default async function ProductPage({ params }: Props) {
                   </div>
                 </div>
               )}
-              <div className="signal-control mt-8 sm:max-w-xs">
+              <div className="mt-8">
                 <AddToCartButton product={product} className="w-full" />
               </div>
               <p className="manual-label mt-4 text-[var(--color-subtle)]">

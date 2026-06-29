@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         solid:
-          "rounded-full bg-[var(--color-panel)] px-5 py-2.5 text-[var(--color-surface)] shadow-[0_2px_0_rgba(11,11,9,0.25)] hover:opacity-90",
+          "rounded-full bg-[var(--color-panel)] px-5 py-2.5 text-[var(--color-surface)] shadow-[0_2px_0_rgba(11,11,9,0.25)] hover:opacity-90 active:translate-y-px active:shadow-[0_1px_0_rgba(11,11,9,0.25)]",
         outline:
           "rounded-full border border-dashed border-[var(--color-ink)] bg-[var(--color-surface)] px-5 py-2.5 text-[var(--color-ink)] hover:bg-[var(--color-surface-muted)]",
         ghost:

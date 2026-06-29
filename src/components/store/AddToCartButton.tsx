@@ -15,6 +15,7 @@ export function AddToCartButton({
 
   return (
     <Button
+      variant="accent"
       className={className}
       onClick={() =>
         addItem({

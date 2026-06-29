@@ -198,14 +198,58 @@ body {
   position: absolute;
   inset: 0;
   z-index: 3;
-  opacity: 0.04;
+  opacity: 0.06;
   background: repeating-linear-gradient(
     0deg,
     transparent,
     transparent 2px,
-    rgba(239, 230, 210, 0.15) 2px,
-    rgba(239, 230, 210, 0.15) 4px
+    rgba(239, 230, 210, 0.18) 2px,
+    rgba(239, 230, 210, 0.18) 4px
   );
+}
+
+.broadcast-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+.broadcast-frame::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 1rem;
+  z-index: 4;
+  border: 1px solid rgba(239, 230, 210, 0.14);
+  box-shadow: inset 0 0 80px rgba(11, 11, 9, 0.45);
+}
+
+.visual-module {
+  position: relative;
+  padding-block: var(--section-py);
+}
+
+.visual-module--cream {
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.visual-module--muted {
+  background: var(--color-surface-muted);
+  color: var(--color-ink);
+}
+
+.visual-module--dark {
+  background: var(--color-panel);
+  color: var(--color-surface);
+}
+
+.visual-module--dark .section-title {
+  color: var(--color-surface);
+}
+
+.visual-module--dark .label-mono,
+.visual-module--dark .manual-label {
+  color: var(--color-subtle);
 }
 
 .ticker {
@@ -258,10 +302,21 @@ body {
     border-color var(--motion-hover);
 }
 
+.machine-btn:active {
+  transform: translateY(1px);
+}
+
 .machine-btn-active {
   box-shadow:
     inset 0 2px 6px rgba(0, 0, 0, 0.45),
     0 0 12px rgba(156, 255, 101, 0.15);
+}
+
+.machine-btn-active:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, 0.55),
+    0 0 8px rgba(156, 255, 101, 0.1);
 }
 
 .machine-btn-led {
@@ -271,20 +326,6 @@ body {
   border-radius: 9999px;
   background: var(--color-led);
   box-shadow: 0 0 6px var(--color-led);
-}
-
-.signal-control button,
-.signal-control a {
-  background: var(--color-accent) !important;
-  color: var(--color-surface) !important;
-  box-shadow:
-    0 3px 0 var(--color-accent-hover),
-    0 0 18px rgba(240, 90, 40, 0.35) !important;
-}
-
-.signal-control button:hover:not(:disabled),
-.signal-control a:hover {
-  background: var(--color-accent-hover) !important;
 }
 
 .signal-boot {
@@ -308,9 +349,58 @@ body {
     0 16px 40px rgba(11, 11, 9, 0.2);
 }
 
+.product-plate-hero {
+  min-height: min(72vh, 640px);
+}
+
+.product-plate-hero .catalog-frame {
+  height: 100%;
+  min-height: inherit;
+}
+
 .buy-module {
   position: sticky;
   top: 5.5rem;
+  align-self: start;
+}
+
+.buy-panel {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 24px rgba(11, 11, 9, 0.08);
+}
+
+@media (min-width: 1024px) {
+  .buy-panel {
+    background: var(--color-panel);
+    color: var(--color-surface);
+    border-color: rgba(239, 230, 210, 0.12);
+    box-shadow:
+      0 12px 40px rgba(11, 11, 9, 0.35),
+      inset 0 1px 0 rgba(239, 230, 210, 0.06);
+    padding: 2rem;
+  }
+
+  .buy-panel .font-display,
+  .buy-panel h1 {
+    color: var(--color-surface);
+  }
+
+  .buy-panel .manual-label,
+  .buy-panel .label-mono {
+    color: var(--color-subtle);
+  }
+
+  .buy-panel .specs-table {
+    background: rgba(11, 11, 9, 0.45);
+    border-color: rgba(239, 230, 210, 0.12);
+  }
+
+  .buy-panel .specs-table-row dd {
+    color: var(--color-surface);
+  }
 }
 
 :focus-visible {

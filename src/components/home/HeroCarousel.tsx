@@ -29,13 +29,13 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
   return (
     <section
       aria-label="Featured releases"
-      className="relative grain-overlay scanline-overlay signal-boot bg-[var(--color-panel)]"
+      className="relative grain-overlay scanline-overlay broadcast-frame signal-boot bg-[var(--color-panel)]"
     >
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex">
           {slides.map((slide, index) => (
             <div key={slide._id} className="relative min-w-0 flex-[0_0_100%]">
-              <div className="relative aspect-[4/3] max-h-[640px] w-full md:aspect-[21/9] md:max-h-[720px]">
+              <div className="relative min-h-[75vh] w-full">
                 <div className="absolute inset-0 overflow-hidden">
                   <Image
                     src={slide.image}
@@ -46,32 +46,34 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                     sizes="100vw"
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-panel)] via-[var(--color-panel)]/70 to-[var(--color-panel)]/20" />
-                <div className="absolute inset-x-0 top-0 flex justify-between px-6 pt-5 md:px-10">
+                <div className="absolute inset-0 bg-[var(--color-panel)]/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-panel)] via-[var(--color-panel)]/85 to-[var(--color-panel)]/40" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-panel)]/70 via-transparent to-transparent" />
+                <div className="absolute inset-x-0 top-0 z-10 flex justify-between px-6 pt-6 md:px-10 md:pt-8">
                   <span className="signal-label">Broadcast // Live</span>
                   <span className="manual-label text-[var(--color-subtle)]">
                     {String(index + 1).padStart(2, "0")} /{" "}
                     {String(slides.length).padStart(2, "0")}
                   </span>
                 </div>
-                <div className="absolute bottom-0 left-0 max-w-3xl p-6 text-[var(--color-surface)] md:p-10">
+                <div className="absolute bottom-0 left-0 z-10 max-w-4xl p-6 text-[var(--color-surface)] md:p-10 md:pb-12">
                   <div className="reveal-up">
-                    <Badge variant="preorder" className="mb-3">
+                    <Badge variant="preorder" className="mb-4">
                       {slide.statusLabel}
                     </Badge>
                   </div>
                   <p className="manual-label reveal-up reveal-up-delay-1 text-[var(--color-surface)]/85">
                     {slide.artistName}
                   </p>
-                  <h1 className="font-display reveal-up reveal-up-delay-2 mt-1 text-4xl leading-[0.95] md:text-6xl lg:text-7xl">
+                  <h1 className="font-display reveal-up reveal-up-delay-2 mt-2 text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.92] tracking-tight">
                     {slide.title}
                   </h1>
                   {slide.subtitle && (
-                    <p className="manual-label reveal-up reveal-up-delay-3 mt-3 text-[var(--color-subtle)]">
+                    <p className="manual-label reveal-up reveal-up-delay-3 mt-4 max-w-xl text-[var(--color-subtle)]">
                       {slide.subtitle}
                     </p>
                   )}
-                  <div className="reveal-up reveal-up-delay-3 mt-6">
+                  <div className="reveal-up reveal-up-delay-3 mt-8">
                     <Button href={slide.ctaHref} variant="accent" size="lg">
                       {slide.ctaLabel}
                     </Button>
@@ -85,7 +87,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
       <button
         type="button"
         onClick={scrollPrev}
-        className="hardware-btn absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+        className="hardware-btn absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
         aria-label="Previous slide"
       >
         <ChevronLeft className="h-5 w-5" />
@@ -93,13 +95,13 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
       <button
         type="button"
         onClick={scrollNext}
-        className="hardware-btn absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+        className="hardware-btn absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
         aria-label="Next slide"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
       {tickerItems.length > 0 && (
-        <div className="ticker" aria-hidden>
+        <div className="ticker relative z-20" aria-hidden>
           <div className="ticker-track">
             {[...tickerItems, ...tickerItems].map((item, i) => (
               <span key={`${item}-${i}`} className="ticker-item manual-label">

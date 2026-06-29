@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Music2 } from "lucide-react";
 import type { SocialLinks as SocialLinksType } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 function XIcon({ className }: { className?: string }) {
   return (
@@ -30,7 +31,13 @@ function YoutubeIcon({ className }: { className?: string }) {
   );
 }
 
-export function SocialLinks({ socials }: { socials: SocialLinksType }) {
+export function SocialLinks({
+  socials,
+  className,
+}: {
+  socials: SocialLinksType;
+  className?: string;
+}) {
   const links = [
     { href: socials.spotify, label: "Spotify", icon: Music2 },
     { href: socials.instagram, label: "Instagram", icon: InstagramIcon },
@@ -42,7 +49,10 @@ export function SocialLinks({ socials }: { socials: SocialLinksType }) {
   if (!links.length) return null;
 
   return (
-    <ul className="flex items-center gap-3" aria-label="Social links">
+    <ul
+      className={cn("flex items-center gap-3 text-current", className)}
+      aria-label="Social links"
+    >
       {links.map(({ href, label, icon: Icon }) => (
         <li key={label}>
           <Link
@@ -50,7 +60,7 @@ export function SocialLinks({ socials }: { socials: SocialLinksType }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
-            className="text-[var(--color-ink)] hover:opacity-70"
+            className="inline-flex transition-opacity hover:opacity-70"
           >
             <Icon className="h-4 w-4" />
           </Link>

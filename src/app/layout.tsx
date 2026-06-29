@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -10,11 +9,6 @@ import { CookieBanner } from "@/components/layout/CookieBanner";
 import { Analytics } from "@/components/layout/Analytics";
 import { getSiteSettings } from "@/lib/data";
 import { JsonLd, organizationJsonLd } from "@/components/seo/JsonLd";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-body",
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
@@ -42,7 +36,7 @@ export default async function RootLayout({
   const baseUrl = `https://${settings.domain}`;
 
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
+    <html lang="en" className="h-full">
       <body className="flex min-h-full flex-col antialiased">
         <a href="#main" className="skip-link">
           Skip to content
