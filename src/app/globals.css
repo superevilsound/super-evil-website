@@ -17,6 +17,8 @@
   --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --section-py: 4rem;
+  --motion-reveal: 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-hover: 0.28s ease;
 }
 
 @theme inline {
@@ -24,6 +26,54 @@
   --color-foreground: var(--color-ink);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slow-drift {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.07) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes signal-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes scanline-drift {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }
 
 * {
@@ -49,7 +99,8 @@ body {
   font-family: var(--font-mono);
 }
 
-.label-mono {
+.label-mono,
+.manual-label {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 500;
@@ -57,10 +108,17 @@ body {
   text-transform: uppercase;
 }
 
-.panel-dark {
+.panel-dark,
+.hardware-panel {
   background: var(--color-panel);
   color: var(--color-surface);
   border: 1px solid rgba(239, 230, 210, 0.12);
+}
+
+.hardware-panel {
+  box-shadow:
+    0 8px 32px rgba(11, 11, 9, 0.35),
+    inset 0 1px 0 rgba(239, 230, 210, 0.06);
 }
 
 .divider-dashed {
@@ -75,8 +133,48 @@ body {
   background: var(--color-surface-muted);
 }
 
+.catalog-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 0 2px 12px rgba(11, 11, 9, 0.06);
+  transition:
+    transform var(--motion-hover),
+    box-shadow var(--motion-hover),
+    border-color var(--motion-hover);
+}
+
+.catalog-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(240, 90, 40, 0.35);
+  box-shadow:
+    0 12px 28px rgba(11, 11, 9, 0.12),
+    0 0 0 1px rgba(240, 90, 40, 0.12);
+}
+
+.reveal-up {
+  animation: reveal-up var(--motion-reveal) both;
+}
+
+.reveal-up-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.reveal-up-delay-2 {
+  animation-delay: 0.16s;
+}
+
+.reveal-up-delay-3 {
+  animation-delay: 0.24s;
+}
+
+.hero-drift {
+  animation: slow-drift 22s ease-in-out infinite alternate;
+}
+
 .grain-overlay {
   position: relative;
+  isolation: isolate;
 }
 
 .grain-overlay::after {
@@ -84,8 +182,135 @@ body {
   pointer-events: none;
   position: absolute;
   inset: 0;
-  opacity: 0.06;
+  z-index: 2;
+  opacity: 0.07;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.scanline-overlay {
+  position: relative;
+  isolation: isolate;
+}
+
+.scanline-overlay::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0.04;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(239, 230, 210, 0.15) 2px,
+    rgba(239, 230, 210, 0.15) 4px
+  );
+}
+
+.ticker {
+  overflow: hidden;
+  border-block: 1px solid rgba(239, 230, 210, 0.1);
+  background: var(--color-panel);
+  color: var(--color-surface);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 38s linear infinite;
+}
+
+.ticker-item {
+  flex-shrink: 0;
+  padding: 0.5rem 2rem;
+  white-space: nowrap;
+}
+
+.hardware-btn {
+  border: 1px solid var(--color-border);
+  background: var(--color-panel);
+  color: var(--color-surface);
+  box-shadow:
+    0 2px 0 rgba(11, 11, 9, 0.4),
+    inset 0 1px 0 rgba(239, 230, 210, 0.08);
+  transition:
+    transform var(--motion-hover),
+    border-color var(--motion-hover),
+    box-shadow var(--motion-hover);
+}
+
+.hardware-btn:hover {
+  border-color: var(--color-accent);
+}
+
+.hardware-btn:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 1px 0 rgba(11, 11, 9, 0.4),
+    inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.machine-btn {
+  transition:
+    transform var(--motion-hover),
+    box-shadow var(--motion-hover),
+    border-color var(--motion-hover);
+}
+
+.machine-btn-active {
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.45),
+    0 0 12px rgba(156, 255, 101, 0.15);
+}
+
+.machine-btn-led {
+  display: inline-block;
+  height: 0.375rem;
+  width: 0.375rem;
+  border-radius: 9999px;
+  background: var(--color-led);
+  box-shadow: 0 0 6px var(--color-led);
+}
+
+.signal-control button,
+.signal-control a {
+  background: var(--color-accent) !important;
+  color: var(--color-surface) !important;
+  box-shadow:
+    0 3px 0 var(--color-accent-hover),
+    0 0 18px rgba(240, 90, 40, 0.35) !important;
+}
+
+.signal-control button:hover:not(:disabled),
+.signal-control a:hover {
+  background: var(--color-accent-hover) !important;
+}
+
+.signal-boot {
+  animation: reveal-up 0.4s ease both;
+}
+
+.signal-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-led);
+  animation: signal-pulse 2.4s ease-in-out infinite;
+}
+
+.product-plate {
+  border: 2px solid var(--color-border);
+  background: var(--color-panel);
+  box-shadow:
+    inset 0 0 0 1px rgba(239, 230, 210, 0.08),
+    0 16px 40px rgba(11, 11, 9, 0.2);
+}
+
+.buy-module {
+  position: sticky;
+  top: 5.5rem;
 }
 
 :focus-visible {
@@ -132,6 +357,11 @@ body {
   border: 1px solid rgba(239, 230, 210, 0.1);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
+  transition: border-color var(--motion-hover);
+}
+
+.audio-demo-panel:hover {
+  border-color: rgba(156, 255, 101, 0.25);
 }
 
 .audio-demo-panel audio {
@@ -170,4 +400,22 @@ body {
 
 .specs-table-row dd {
   color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .catalog-card:hover {
+    transform: none;
+  }
+
+  .hero-drift {
+    transform: none !important;
+  }
 }

@@ -26,12 +26,24 @@ export function Nav() {
               <Link
                 href={href}
                 className={cn(
-                  "label-mono inline-block border-b-2 border-transparent py-1 text-[var(--color-surface)]/80 transition-colors hover:text-[var(--color-surface)]",
-                  active &&
-                    "border-[var(--color-led)] font-semibold text-[var(--color-surface)]",
+                  "manual-label relative inline-flex items-center gap-1.5 py-1 text-[var(--color-surface)]/75 transition-colors hover:text-[var(--color-surface)]",
+                  active && "font-semibold text-[var(--color-surface)]",
                 )}
               >
-                {label}
+                {active && (
+                  <span
+                    className="machine-btn-led shrink-0"
+                    aria-hidden
+                  />
+                )}
+                <span
+                  className={cn(
+                    "border-b-2 border-transparent pb-0.5",
+                    active && "border-[var(--color-accent)]",
+                  )}
+                >
+                  {label}
+                </span>
               </Link>
             </li>
           );

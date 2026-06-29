@@ -27,25 +27,31 @@ export function StoreGrid({ products }: { products: Product[] }) {
   ];
 
   return (
-    <div>
+    <div className="reveal-up">
       <div className="mb-6 flex flex-wrap gap-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setCategory(tab.id)}
-            className={cn(
-              "label-mono rounded-full px-4 py-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
-              category === tab.id
-                ? "bg-[var(--color-panel)] text-[var(--color-surface)] shadow-[inset_0_2px_4px_rgba(0,0,0,0.35)]"
-                : "border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] hover:bg-[var(--color-surface-muted)]",
-            )}
-          >
-            {tab.label}
-          </button>
-        ))}
+        {tabs.map((tab) => {
+          const active = category === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setCategory(tab.id)}
+              className={cn(
+                "machine-btn manual-label inline-flex items-center gap-2 rounded-full px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+                active
+                  ? "machine-btn-active bg-[var(--color-panel)] text-[var(--color-surface)]"
+                  : "border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] hover:bg-[var(--color-surface-muted)]",
+              )}
+            >
+              {active && (
+                <span className="machine-btn-led" aria-hidden />
+              )}
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
-      <div className="label-mono mb-6 flex flex-wrap gap-6 text-[var(--color-subtle)]">
+      <div className="manual-label mb-6 flex flex-wrap gap-6 text-[var(--color-subtle)]">
         <label className="flex cursor-pointer items-center gap-2">
           <input
             type="checkbox"
@@ -66,12 +72,17 @@ export function StoreGrid({ products }: { products: Product[] }) {
         </label>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((product) => (
-          <ProductCard key={product._id} product={product} />
+        {filtered.map((product, i) => (
+          <div
+            key={product._id}
+            className={cn("reveal-up", i % 3 === 1 && "reveal-up-delay-1", i % 3 === 2 && "reveal-up-delay-2")}
+          >
+            <ProductCard product={product} />
+          </div>
         ))}
       </div>
       {!filtered.length && (
-        <p className="label-mono text-[var(--color-subtle)]">
+        <p className="manual-label text-[var(--color-subtle)]">
           No products match your filters.
         </p>
       )}

@@ -15,7 +15,7 @@ const buttonVariants = cva(
           "rounded-full px-4 py-2 text-[var(--color-ink)] hover:bg-[var(--color-surface-muted)]",
         link: "p-0 h-auto normal-case tracking-normal font-sans text-[var(--color-accent)] underline-offset-4 hover:underline",
         accent:
-          "rounded-full bg-[var(--color-accent)] px-5 py-2.5 text-[var(--color-surface)] shadow-[0_3px_0_var(--color-accent-hover)] hover:bg-[var(--color-accent-hover)]",
+          "rounded-full bg-[var(--color-accent)] px-5 py-2.5 text-[var(--color-surface)] shadow-[0_3px_0_var(--color-accent-hover),0_0_16px_rgba(240,90,40,0.25)] hover:bg-[var(--color-accent-hover)] active:translate-y-px active:shadow-[0_2px_0_var(--color-accent-hover)]",
       },
       size: {
         sm: "h-9 px-4 text-[0.65rem]",
