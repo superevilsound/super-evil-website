@@ -6,11 +6,12 @@ import {
   getProducts,
   getSiteSettings,
 } from "@/lib/data";
-import { productTypeLabel } from "@/lib/cart";
+import { storeProductTypeLabel } from "@/lib/store-display-labels";
 import { AddToCartButton } from "@/components/store/AddToCartButton";
 import { VariantSelector } from "@/components/store/VariantSelector";
 import { ProductCard } from "@/components/store/ProductCard";
 import { Badge, SectionTitle } from "@/components/ui/button";
+import { ConnieMark } from "@/components/brand/ConnieMark";
 import { JsonLd, productJsonLd } from "@/components/seo/JsonLd";
 import type { Metadata } from "next";
 
@@ -49,6 +50,11 @@ export default async function ProductPage({ params }: Props) {
   const settings = await getSiteSettings();
   const baseUrl = `https://${settings.domain}`;
   const isHardware = product.type === "pedal";
+  const hardwareStickers = [
+    "Connie Approved",
+    "Signal Damage Ready",
+    "Tested in the Pit",
+  ] as const;
 
   return (
     <article className="signal-boot py-[var(--section-py)]">
@@ -63,7 +69,7 @@ export default async function ProductPage({ params }: Props) {
         })}
       />
       <div className="container-main">
-        <p className="signal-label mb-6">Signal acquired // Product module</p>
+        <p className="connievision-boot mb-6">Connievision // Product module online</p>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="reveal-up space-y-5">
             {product.images.map((img, i) => {
@@ -77,6 +83,13 @@ export default async function ProductPage({ params }: Props) {
                       : "aspect-square"
                   } ${isHardware || isHero ? "bg-[var(--color-panel)]" : "bg-[var(--color-surface-muted)]"}`}
                 >
+                  {isHero && isHardware && (
+                    <ConnieMark
+                      variant="hero"
+                      className="absolute -right-4 bottom-2 z-10 w-32 opacity-70 md:w-40"
+                      priority
+                    />
+                  )}
                   <div className="catalog-frame relative h-full min-h-[280px] w-full overflow-hidden">
                     <Image
                       src={img}
@@ -88,7 +101,7 @@ export default async function ProductPage({ params }: Props) {
                     />
                   </div>
                   {isHero && isHardware && (
-                    <span className="manual-label absolute bottom-6 left-6 z-10 text-[var(--color-led)]">
+                    <span className="sticker-label sticker-label--orange absolute bottom-6 left-6 z-10">
                       Hardware plate // 01
                     </span>
                   )}
@@ -99,14 +112,23 @@ export default async function ProductPage({ params }: Props) {
           <div className="buy-module reveal-up reveal-up-delay-1">
             <div className="buy-panel">
               <p className="manual-label text-[var(--color-subtle)]">
-                {productTypeLabel(product.type)}
+                {storeProductTypeLabel(product.type)}
               </p>
-              <h1 className="font-display mt-1 text-3xl leading-tight md:text-4xl">
+              <h1 className="font-poster mt-1 text-3xl leading-none md:text-4xl">
                 {product.title}
               </h1>
               <p className="manual-label mt-2 text-[var(--color-subtle)]">
                 {product.shipWindow}
               </p>
+              {isHardware && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {hardwareStickers.map((label) => (
+                    <span key={label} className="sticker-label sticker-in text-[0.6rem]">
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              )}
               <div className="mt-4 flex flex-wrap gap-2">
                 {product.preorder && <Badge variant="preorder">Pre-order</Badge>}
                 {!product.inStock && !product.preorder && (

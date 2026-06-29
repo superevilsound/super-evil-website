@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { Product, ProductType } from "@/lib/types";
 import { ProductCard } from "@/components/store/ProductCard";
+import { storeCategoryLabel } from "@/lib/store-display-labels";
 import { cn } from "@/lib/utils";
 
 export function StoreGrid({ products }: { products: Product[] }) {
@@ -20,10 +21,10 @@ export function StoreGrid({ products }: { products: Product[] }) {
   }, [products, category, inStockOnly, preorderOnly]);
 
   const tabs: { id: ProductType | "all"; label: string }[] = [
-    { id: "all", label: "All" },
-    { id: "pedal", label: "Pedals" },
-    { id: "sample_pack", label: "Sample Packs" },
-    { id: "merch", label: "Merch" },
+    { id: "all", label: storeCategoryLabel("all") },
+    { id: "pedal", label: storeCategoryLabel("pedal") },
+    { id: "sample_pack", label: storeCategoryLabel("sample_pack") },
+    { id: "merch", label: storeCategoryLabel("merch") },
   ];
 
   return (
@@ -40,7 +41,7 @@ export function StoreGrid({ products }: { products: Product[] }) {
                 "machine-btn manual-label inline-flex items-center gap-2 rounded-full px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
                 active
                   ? "machine-btn-active bg-[var(--color-panel)] text-[var(--color-surface)]"
-                  : "border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] hover:bg-[var(--color-surface-muted)]",
+                  : "border-2 border-dashed border-[var(--color-ink)] bg-[var(--color-surface)] text-[var(--color-ink)] hover:bg-[var(--color-poster-yellow)]/40",
               )}
             >
               {active && (
@@ -71,13 +72,13 @@ export function StoreGrid({ products }: { products: Product[] }) {
           Pre-order
         </label>
       </div>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="collage-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((product, i) => (
           <div
             key={product._id}
             className={cn("reveal-up", i % 3 === 1 && "reveal-up-delay-1", i % 3 === 2 && "reveal-up-delay-2")}
           >
-            <ProductCard product={product} />
+            <ProductCard product={product} index={i} />
           </div>
         ))}
       </div>

@@ -247,7 +247,7 @@ export const events: Event[] = [
       _id: "artist-catatoneya",
       name: "Catatoneya",
       slug: "catatoneya",
-      heroImage: img("photo-1511671782779-c97d3d27a1d4", 400),
+      heroImage: img("photo-1511671782779-c97d3d27a1d4"),
     },
     title: "Cicada Drive Release Show",
     venue: "Mr Roboto Project",

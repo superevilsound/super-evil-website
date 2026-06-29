@@ -9,8 +9,11 @@ import { NewsCard } from "@/components/news/NewsCard";
 import { ReleaseCarousel } from "@/components/releases/ReleaseCarousel";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { SectionTitle, Button } from "@/components/ui/button";
+import { ConnieMark } from "@/components/brand/ConnieMark";
 
 export const revalidate = 60;
+
+const collageTilts = ["collage-tilt-a", "collage-tilt-b", "collage-tilt-c"] as const;
 
 export default async function HomePage() {
   const [slides, news, releases, settings] = await Promise.all([
@@ -23,23 +26,24 @@ export default async function HomePage() {
   return (
     <>
       <HeroCarousel slides={slides} />
-      <section className="visual-module visual-module--cream">
-        <div className="container-main reveal-up">
+      <section className="visual-module visual-module--cream relative overflow-hidden">
+        <ConnieMark variant="sticker-light" className="connie-sticker connie-sticker--corner sticker-in" />
+        <div className="container-main relative z-[1] reveal-up">
           <SectionTitle
-            eyebrow="News"
-            title="Latest News"
+            eyebrow="Transmissions"
+            title="Connie's Dispatches"
             action={
               <div className="flex flex-wrap items-center gap-2">
                 <Button href="/store" variant="accent" size="sm">
-                  Shop Pedals
+                  Shop Machines
                 </Button>
                 <Button href="/news" variant="outline" size="sm">
-                  See More News
+                  All Transmissions
                 </Button>
               </div>
             }
           />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="collage-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {news.map((post, i) => (
               <div
                 key={post._id}
@@ -51,21 +55,26 @@ export default async function HomePage() {
                       : "reveal-up"
                 }
               >
-                <NewsCard post={post} />
+                <NewsCard post={post} tilt={collageTilts[i % 3]} />
               </div>
             ))}
           </div>
         </div>
       </section>
-      <section className="visual-module visual-module--dark grain-overlay border-y border-[var(--color-border)]">
-        <div className="container-main reveal-up">
-          <SectionTitle eyebrow="Releases" title="Recent Releases" />
+      <section className="visual-module visual-module--dark grain-overlay relative overflow-hidden border-y-4 border-[var(--color-accent)]">
+        <ConnieMark variant="watermark-dark" className="connie-watermark" />
+        <div className="container-main relative z-[1] reveal-up">
+          <SectionTitle eyebrow="Archive" title="Recent Noise" />
           <ReleaseCarousel releases={releases} />
         </div>
       </section>
-      <section className="visual-module visual-module--muted">
-        <div className="container-main reveal-up">
-          <SectionTitle title="Join Our Mailing List" />
+      <section className="visual-module visual-module--poster relative overflow-hidden">
+        <ConnieMark
+          variant="sticker-light"
+          className="connie-sticker bottom-4 left-[6%] top-auto wobble-hold opacity-20"
+        />
+        <div className="container-main relative z-[1] reveal-up">
+          <SectionTitle title="Join the Signal" />
           <div className="mx-auto max-w-xl">
             <NewsletterForm copy={settings.newsletterCopy} />
           </div>

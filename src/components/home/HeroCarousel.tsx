@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { HeroSlide } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/button";
+import { ConnieMark } from "@/components/brand/ConnieMark";
 import { useCallback, useMemo } from "react";
 
 export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
@@ -20,8 +21,8 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
   const tickerItems = useMemo(
     () =>
       slides.flatMap((slide) => [
-        `${slide.artistName} — ${slide.title}`,
-        slide.statusLabel,
+        `CONNIEvision // ${slide.artistName} — ${slide.title}`,
+        slide.statusLabel.toUpperCase(),
       ]),
     [slides],
   );
@@ -29,7 +30,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
   return (
     <section
       aria-label="Featured releases"
-      className="relative grain-overlay scanline-overlay broadcast-frame signal-boot bg-[var(--color-panel)]"
+      className="relative grain-overlay scanline-overlay broadcast-frame signal-boot overflow-hidden bg-[var(--color-panel)]"
     >
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex">
@@ -39,41 +40,55 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                 <div className="absolute inset-0 overflow-hidden">
                   <Image
                     src={slide.image}
-                    alt={`${slide.artistName} — ${slide.title}`}
+                    alt=""
                     fill
-                    className="hero-drift object-cover"
+                    className="hero-drift object-cover opacity-70"
                     priority={index === 0}
                     sizes="100vw"
                   />
                 </div>
-                <div className="absolute inset-0 bg-[var(--color-panel)]/30" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-panel)] via-[var(--color-panel)]/85 to-[var(--color-panel)]/40" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-panel)]/70 via-transparent to-transparent" />
-                <div className="absolute inset-x-0 top-0 z-10 flex justify-between px-4 pt-5 sm:px-6 sm:pt-6 md:px-10 md:pt-8">
-                  <span className="signal-label">Broadcast // Live</span>
-                  <span className="manual-label text-[var(--color-subtle)]">
+                <div className="absolute inset-0 bg-[var(--color-accent)]/10 mix-blend-multiply" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-panel)] via-[var(--color-panel)]/90 to-[var(--color-panel)]/55" />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,11,9,0.85)_0%,rgba(11,11,9,0.35)_55%,transparent_100%)]" />
+
+                <ConnieMark
+                  variant="hero"
+                  priority={index === 0}
+                  className="sticker-in absolute -right-[8%] bottom-[12%] z-[5] w-[min(58vw,22rem)] opacity-90 md:-right-[2%] md:bottom-[8%] md:w-[min(42vw,26rem)]"
+                />
+
+                <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between px-4 pt-5 sm:px-6 sm:pt-6 md:px-10 md:pt-8">
+                  <div>
+                    <ConnieMark
+                      variant="boot"
+                      className="mb-2 w-10 opacity-80 xerox-flicker md:w-12"
+                    />
+                    <p className="connievision-boot">Connievision // Infernal Art Broadcast</p>
+                  </div>
+                  <span className="manual-label text-[var(--color-poster-yellow)]">
                     {String(index + 1).padStart(2, "0")} /{" "}
                     {String(slides.length).padStart(2, "0")}
                   </span>
                 </div>
-                <div className="absolute bottom-0 left-0 z-10 max-w-4xl px-4 pb-20 pr-16 pt-6 text-[var(--color-surface)] sm:px-6 sm:pb-20 sm:pr-6 md:p-10 md:pb-14 md:pr-10">
+
+                <div className="absolute bottom-0 left-0 z-10 max-w-[92%] px-4 pb-20 pr-14 pt-6 text-[var(--color-surface)] sm:max-w-3xl sm:px-6 sm:pb-20 sm:pr-6 md:p-10 md:pb-14">
                   <div className="reveal-up">
                     <Badge variant="preorder" className="mb-3 md:mb-4">
                       {slide.statusLabel}
                     </Badge>
                   </div>
-                  <p className="manual-label reveal-up reveal-up-delay-1 text-[var(--color-surface)]/85">
+                  <p className="manual-label reveal-up reveal-up-delay-1 text-[var(--color-poster-yellow)]">
                     {slide.artistName}
                   </p>
-                  <h1 className="font-display reveal-up reveal-up-delay-2 mt-1.5 text-[clamp(2rem,7vw,5.5rem)] leading-[0.94] tracking-tight md:mt-2 md:leading-[0.92]">
+                  <h1 className="font-poster reveal-up reveal-up-delay-2 mt-1 text-[clamp(2.25rem,9vw,6rem)] leading-[0.88] tracking-tight md:mt-2">
                     {slide.title}
                   </h1>
                   {slide.subtitle && (
-                    <p className="manual-label reveal-up reveal-up-delay-3 mt-3 max-w-xl text-[var(--color-subtle)] md:mt-4">
+                    <p className="font-editorial reveal-up reveal-up-delay-3 mt-3 max-w-xl text-base text-[var(--color-surface)]/85 md:mt-4 md:text-lg">
                       {slide.subtitle}
                     </p>
                   )}
-                  <div className="reveal-up reveal-up-delay-3 mt-5 md:mt-8">
+                  <div className="reveal-up reveal-up-delay-3 mt-5 md:mt-7">
                     <Button href={slide.ctaHref} variant="accent" size="lg">
                       {slide.ctaLabel}
                     </Button>
@@ -104,9 +119,9 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
         <div className="ticker relative z-20" aria-hidden>
           <div className="ticker-track">
             {[...tickerItems, ...tickerItems].map((item, i) => (
-              <span key={`${item}-${i}`} className="ticker-item manual-label">
+              <span key={`${item}-${i}`} className="ticker-item">
                 {item}
-                <span className="mx-4 text-[var(--color-accent)]">◆</span>
+                <span className="mx-3 text-[var(--color-led)]">★</span>
               </span>
             ))}
           </div>

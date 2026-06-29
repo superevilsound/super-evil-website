@@ -103,7 +103,9 @@ export function SectionTitle({
       <div className="flex items-end justify-between gap-4">
         <div>
           {eyebrow && (
-            <p className="label-mono mb-2 text-[var(--color-subtle)]">{eyebrow}</p>
+            <p className="section-eyebrow-editorial label-mono mb-2 text-[var(--color-subtle)]">
+              {eyebrow}
+            </p>
           )}
           <h2 className="section-title text-[var(--color-ink)]">{title}</h2>
         </div>

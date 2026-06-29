@@ -6,6 +6,9 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Release } from "@/lib/types";
 import { useCallback } from "react";
+import { cn } from "@/lib/utils";
+
+const tilts = ["collage-tilt-b", "collage-tilt-a", "collage-tilt-c"] as const;
 
 export function ReleaseCarousel({ releases }: { releases: Release[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -20,31 +23,39 @@ export function ReleaseCarousel({ releases }: { releases: Release[] }) {
     <div className="relative">
       <div ref={emblaRef} className="overflow-hidden">
         <div className="flex gap-4">
-          {releases.map((release) => (
+          {releases.map((release, index) => (
             <Link
               key={release._id}
               href={release.streamingLinks.spotify ?? `/artists/${release.artist.slug}`}
-              className="catalog-card group min-w-0 flex-[0_0_78%] sm:flex-[0_0_48%] md:flex-[0_0_32%] lg:flex-[0_0_26%]"
+              className={cn(
+                "catalog-card group min-w-0 flex-[0_0_78%] sm:flex-[0_0_48%] md:flex-[0_0_32%] lg:flex-[0_0_26%]",
+                tilts[index % tilts.length],
+              )}
             >
-              <div className="catalog-frame relative m-2 aspect-square overflow-hidden">
-                <Image
-                  src={release.coverArt}
-                  alt={release.title}
-                  fill
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
-                  sizes="320px"
-                />
+              <div className="relative px-2 pt-2">
+                <span className="sticker-label sticker-label--pink absolute right-3 top-3 z-10 rotate-3">
+                  Archive
+                </span>
+                <div className="catalog-frame relative aspect-square overflow-hidden border-[var(--color-surface)]/30 bg-[var(--color-panel)]">
+                  <Image
+                    src={release.coverArt}
+                    alt={release.title}
+                    fill
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+                    sizes="320px"
+                  />
+                </div>
               </div>
-              <div className="border-t border-[var(--color-border)] bg-[var(--color-surface-muted)] px-3 py-2.5">
-                <span className="manual-label text-[var(--color-subtle)]">
-                  Release · Archive
+              <div className="border-t-2 border-[var(--color-accent)] bg-[var(--color-ink)] px-3 py-2.5 text-[var(--color-surface)]">
+                <span className="manual-label text-[var(--color-poster-yellow)]">
+                  Recent Noise
                 </span>
                 <p className="mt-1.5 leading-snug">
                   <span className="font-mono text-xs uppercase tracking-wide text-[var(--color-subtle)]">
                     {release.artist.name}
                   </span>
-                  <span className="mx-1.5 text-[var(--color-border)]">·</span>
-                  <span className="font-display text-base text-[var(--color-ink)]">
+                  <span className="mx-1.5 text-[var(--color-accent)]">/</span>
+                  <span className="font-poster text-lg leading-none">
                     {release.title}
                   </span>
                 </p>
