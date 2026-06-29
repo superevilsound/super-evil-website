@@ -8,11 +8,13 @@ export async function Header() {
   const settings = await getSiteSettings();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[var(--color-border)] border-b-[var(--color-accent)]/25 bg-[var(--color-panel)]/95 text-[var(--color-surface)] backdrop-blur-sm">
       <div className="container-main flex h-16 items-center justify-between gap-4">
         <Link href="/" className="group shrink-0">
-          <span className="font-display text-lg leading-none">{settings.name}</span>
-          <span className="block text-[10px] text-[var(--color-subtle)] leading-none">
+          <span className="font-display text-lg leading-none text-[var(--color-surface)]">
+            {settings.name}
+          </span>
+          <span className="label-mono mt-0.5 block text-[10px] text-[var(--color-subtle)]">
             {settings.slogan}
           </span>
         </Link>
@@ -20,7 +22,7 @@ export async function Header() {
           <Nav />
           <SocialLinks socials={settings.socials} />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 text-[var(--color-surface)]">
           <div className="lg:hidden">
             <Nav />
           </div>

@@ -32,19 +32,23 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                   priority={slide._id === slides[0]?._id}
                   sizes="100vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-6 text-white md:p-10">
-                  <Badge className="mb-2 bg-white/20 text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-panel)]/95 via-[var(--color-panel)]/55 to-[var(--color-panel)]/15" />
+                <div className="absolute bottom-0 left-0 max-w-2xl p-6 text-[var(--color-surface)] md:p-10">
+                  <Badge variant="preorder" className="mb-3">
                     {slide.statusLabel}
                   </Badge>
-                  <p className="font-display text-sm uppercase tracking-wider opacity-90">
+                  <p className="label-mono text-[var(--color-surface)]/85">
                     {slide.artistName}
                   </p>
-                  <h1 className="font-display text-3xl md:text-5xl">{slide.title}</h1>
+                  <h1 className="font-display mt-1 text-4xl leading-tight md:text-6xl">
+                    {slide.title}
+                  </h1>
                   {slide.subtitle && (
-                    <p className="mt-1 text-sm opacity-80">{slide.subtitle}</p>
+                    <p className="label-mono mt-2 text-[var(--color-subtle)]">
+                      {slide.subtitle}
+                    </p>
                   )}
-                  <Button href={slide.ctaHref} variant="accent" className="mt-4">
+                  <Button href={slide.ctaHref} variant="accent" className="mt-5">
                     {slide.ctaLabel}
                   </Button>
                 </div>
@@ -56,7 +60,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
       <button
         type="button"
         onClick={scrollPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow"
+        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full border border-[var(--color-border)] bg-[var(--color-panel)] p-3 text-[var(--color-surface)] shadow-md transition-colors hover:border-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
         aria-label="Previous slide"
       >
         <ChevronLeft className="h-5 w-5" />
@@ -64,7 +68,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
       <button
         type="button"
         onClick={scrollNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow"
+        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full border border-[var(--color-border)] bg-[var(--color-panel)] p-3 text-[var(--color-surface)] shadow-md transition-colors hover:border-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
         aria-label="Next slide"
       >
         <ChevronRight className="h-5 w-5" />

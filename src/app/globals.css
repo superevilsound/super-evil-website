@@ -1,16 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Shrikhand&family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
-  --color-ink: #181a1c;
-  --color-subtle: #5c6370;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f7f7f5;
-  --color-accent: #c41e3a;
-  --color-accent-hover: #9e1830;
-  --color-border: #e5e7eb;
-  --font-display: "Shrikhand", cursive;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --color-ink: #0b0b09;
+  --color-subtle: #8d8778;
+  --color-surface: #efe6d2;
+  --color-surface-muted: #d8c8a3;
+  --color-panel: #151511;
+  --color-accent: #f05a28;
+  --color-accent-hover: #c8461f;
+  --color-led: #9cff65;
+  --color-blue: #3b6f83;
+  --color-warning: #d93326;
+  --color-border: rgba(21, 21, 17, 0.22);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --section-py: 4rem;
 }
 
@@ -32,12 +37,42 @@ html {
 body {
   background: var(--color-surface);
   color: var(--color-ink);
-  font-family: var(--font-body);
+  font-family: "IBM Plex Sans", var(--font-body), system-ui, -apple-system, sans-serif;
   line-height: 1.6;
 }
 
 .font-display {
   font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.panel-dark {
+  background: var(--color-panel);
+  color: var(--color-surface);
+  border: 1px solid rgba(239, 230, 210, 0.12);
+}
+
+.divider-dashed {
+  border-top: 1px dashed var(--color-border);
+}
+
+.catalog-frame {
+  border: 2px solid var(--color-border);
+  box-shadow:
+    inset 0 0 0 1px rgba(239, 230, 210, 0.35),
+    0 2px 8px rgba(11, 11, 9, 0.08);
+  background: var(--color-surface-muted);
 }
 
 .grain-overlay {
@@ -49,7 +84,7 @@ body {
   pointer-events: none;
   position: absolute;
   inset: 0;
-  opacity: 0.04;
+  opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -63,8 +98,8 @@ body {
   left: -9999px;
   z-index: 999;
   padding: 0.75rem 1rem;
-  background: var(--color-ink);
-  color: white;
+  background: var(--color-panel);
+  color: var(--color-surface);
 }
 
 .skip-link:focus {
@@ -75,7 +110,8 @@ body {
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
-  line-height: 1.2;
+  line-height: 1.15;
+  font-weight: 600;
 }
 
 .container-main {
@@ -89,4 +125,49 @@ body {
   .container-main {
     padding-inline: 1.5rem;
   }
+}
+
+.audio-demo-panel {
+  background: var(--color-panel);
+  border: 1px solid rgba(239, 230, 210, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.audio-demo-panel audio {
+  width: 100%;
+  margin-top: 0.5rem;
+  filter: sepia(0.15);
+}
+
+.specs-table {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.specs-table-row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) 2fr;
+  gap: 1rem;
+  padding: 0.625rem 1rem;
+  border-bottom: 1px dashed var(--color-border);
+  font-size: 0.875rem;
+}
+
+.specs-table-row:last-child {
+  border-bottom: none;
+}
+
+.specs-table-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-subtle);
+}
+
+.specs-table-row dd {
+  color: var(--color-ink);
 }

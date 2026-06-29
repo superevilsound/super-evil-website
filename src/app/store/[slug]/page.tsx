@@ -48,6 +48,7 @@ export default async function ProductPage({ params }: Props) {
   );
   const settings = await getSiteSettings();
   const baseUrl = `https://${settings.domain}`;
+  const isHardware = product.type === "pedal";
 
   return (
     <article className="py-[var(--section-py)]">
@@ -62,57 +63,79 @@ export default async function ProductPage({ params }: Props) {
         })}
       />
       <div className="container-main">
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div className="space-y-3">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+          <div className="space-y-4">
             {product.images.map((img, i) => (
-              <div key={img} className="relative aspect-square overflow-hidden rounded-lg border border-[var(--color-border)]">
-                <Image
-                  src={img}
-                  alt={`${product.title} ${i + 1}`}
-                  fill
-                  className="object-cover"
-                  priority={i === 0}
-                  sizes="(max-width:1024px) 100vw, 50vw"
-                />
+              <div
+                key={img}
+                className={`catalog-frame relative aspect-square overflow-hidden rounded-sm ${
+                  isHardware && i === 0 ? "bg-[var(--color-panel)] p-3" : ""
+                }`}
+              >
+                <div className="relative h-full w-full overflow-hidden">
+                  <Image
+                    src={img}
+                    alt={`${product.title} ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    priority={i === 0}
+                    sizes="(max-width:1024px) 100vw, 50vw"
+                  />
+                </div>
               </div>
             ))}
           </div>
           <div>
-            <p className="text-xs uppercase tracking-wider text-[var(--color-subtle)]">
+            <p className="label-mono text-[var(--color-subtle)]">
               {productTypeLabel(product.type)}
             </p>
-            <h1 className="font-display text-3xl md:text-4xl">{product.title}</h1>
-            <p className="mt-1 text-sm text-[var(--color-subtle)]">{product.shipWindow}</p>
-            <div className="mt-4 flex gap-2">
-              {product.preorder && <Badge>Pre-order</Badge>}
+            <h1 className="font-display mt-1 text-3xl text-[var(--color-ink)] md:text-4xl">
+              {product.title}
+            </h1>
+            <p className="label-mono mt-2 text-[var(--color-subtle)]">
+              {product.shipWindow}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {product.preorder && <Badge variant="preorder">Pre-order</Badge>}
               {!product.inStock && !product.preorder && (
-                <Badge className="bg-red-700">Sold out</Badge>
+                <Badge variant="soldout">Sold out</Badge>
+              )}
+              {product.inStock && !product.preorder && (
+                <Badge variant="instock">In stock</Badge>
               )}
             </div>
-            <div className="mt-4">
+            <div className="mt-5">
               <VariantSelector product={product} />
             </div>
-            <p className="mt-4 leading-relaxed">{product.description}</p>
+            <p className="mt-5 leading-relaxed text-[var(--color-ink)]">
+              {product.description}
+            </p>
             {product.specs.length > 0 && (
-              <div className="mt-6">
-                <h2 className="text-sm font-semibold uppercase">Specs</h2>
-                <dl className="mt-2 space-y-1 text-sm">
+              <div className="mt-8">
+                <h2 className="label-mono mb-3 text-[var(--color-subtle)]">
+                  Specifications
+                </h2>
+                <dl className="specs-table">
                   {product.specs.map((s) => (
-                    <div key={s.key} className="flex gap-2">
-                      <dt className="font-medium">{s.key}:</dt>
-                      <dd className="text-[var(--color-subtle)]">{s.value}</dd>
+                    <div key={s.key} className="specs-table-row">
+                      <dt>{s.key}</dt>
+                      <dd>{s.value}</dd>
                     </div>
                   ))}
                 </dl>
               </div>
             )}
             {product.audioDemos.length > 0 && (
-              <div className="mt-6">
-                <h2 className="text-sm font-semibold uppercase">Audio demos</h2>
-                <div className="mt-2 space-y-3">
+              <div className="mt-8">
+                <h2 className="label-mono mb-3 text-[var(--color-subtle)]">
+                  Signal tests
+                </h2>
+                <div className="space-y-3">
                   {product.audioDemos.map((demo) => (
-                    <div key={demo.url}>
-                      <p className="mb-1 text-sm">{demo.label}</p>
+                    <div key={demo.url} className="audio-demo-panel">
+                      <p className="label-mono text-[var(--color-surface)]/90">
+                        {demo.label}
+                      </p>
                       <audio controls className="w-full" preload="none">
                         <source src={demo.url} type="audio/mpeg" />
                         <track kind="captions" />
@@ -122,17 +145,23 @@ export default async function ProductPage({ params }: Props) {
                 </div>
               </div>
             )}
-            <div className="mt-8">
-              <AddToCartButton product={product} />
+            <div className="mt-8 sm:max-w-xs">
+              <AddToCartButton product={product} className="w-full" />
             </div>
-            <p className="mt-4 text-xs text-[var(--color-subtle)]">
-              <Link href="/returns" className="underline">
+            <p className="label-mono mt-4 text-[var(--color-subtle)]">
+              <Link
+                href="/returns"
+                className="text-[var(--color-accent)] hover:underline"
+              >
                 Shipping & returns
               </Link>
               {product.type === "sample_pack" && (
                 <>
                   {" · "}
-                  <Link href="/eula" className="underline">
+                  <Link
+                    href="/eula"
+                    className="text-[var(--color-accent)] hover:underline"
+                  >
                     License / EULA
                   </Link>
                 </>

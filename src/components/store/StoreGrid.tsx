@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { Product, ProductType } from "@/lib/types";
 import { ProductCard } from "@/components/store/ProductCard";
+import { cn } from "@/lib/utils";
 
 export function StoreGrid({ products }: { products: Product[] }) {
   const [category, setCategory] = useState<ProductType | "all">("all");
@@ -33,30 +34,33 @@ export function StoreGrid({ products }: { products: Product[] }) {
             key={tab.id}
             type="button"
             onClick={() => setCategory(tab.id)}
-            className={`rounded-full px-4 py-1.5 text-sm ${
+            className={cn(
+              "label-mono rounded-full px-4 py-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
               category === tab.id
-                ? "bg-[var(--color-ink)] text-white"
-                : "border border-[var(--color-border)]"
-            }`}
+                ? "bg-[var(--color-panel)] text-[var(--color-surface)] shadow-[inset_0_2px_4px_rgba(0,0,0,0.35)]"
+                : "border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-ink)] hover:bg-[var(--color-surface-muted)]",
+            )}
           >
             {tab.label}
           </button>
         ))}
       </div>
-      <div className="mb-6 flex flex-wrap gap-4 text-sm">
-        <label className="flex items-center gap-2">
+      <div className="label-mono mb-6 flex flex-wrap gap-6 text-[var(--color-subtle)]">
+        <label className="flex cursor-pointer items-center gap-2">
           <input
             type="checkbox"
             checked={inStockOnly}
             onChange={(e) => setInStockOnly(e.target.checked)}
+            className="accent-[var(--color-accent)]"
           />
           In stock
         </label>
-        <label className="flex items-center gap-2">
+        <label className="flex cursor-pointer items-center gap-2">
           <input
             type="checkbox"
             checked={preorderOnly}
             onChange={(e) => setPreorderOnly(e.target.checked)}
+            className="accent-[var(--color-accent)]"
           />
           Pre-order
         </label>
@@ -67,7 +71,9 @@ export function StoreGrid({ products }: { products: Product[] }) {
         ))}
       </div>
       {!filtered.length && (
-        <p className="text-[var(--color-subtle)]">No products match your filters.</p>
+        <p className="label-mono text-[var(--color-subtle)]">
+          No products match your filters.
+        </p>
       )}
     </div>
   );

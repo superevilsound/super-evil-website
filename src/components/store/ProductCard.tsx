@@ -9,30 +9,35 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/store/${product.slug}`}
-      className="group block overflow-hidden rounded-lg border border-[var(--color-border)] bg-white"
+      className="group block overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm transition-shadow hover:shadow-md"
     >
-      <div className="relative aspect-square overflow-hidden">
+      <div className="catalog-frame relative m-3 aspect-square overflow-hidden">
         <Image
           src={product.images[0]}
           alt={product.title}
           fill
-          className="object-cover transition-transform group-hover:scale-[1.02]"
+          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           sizes="(max-width:640px) 50vw, 33vw"
         />
       </div>
-      <div className="p-4">
-        <p className="text-xs uppercase tracking-wider text-[var(--color-subtle)]">
+      <div className="divider-dashed mx-3" aria-hidden />
+      <div className="p-4 pt-3">
+        <p className="label-mono text-[var(--color-subtle)]">
           {productTypeLabel(product.type)}
         </p>
-        <h3 className="mt-1 font-semibold">{product.title}</h3>
-        <p className="mt-1 text-sm text-[var(--color-subtle)]">
+        <h3 className="mt-1 font-semibold leading-snug text-[var(--color-ink)]">
+          {product.title}
+        </h3>
+        <p className="label-mono mt-1 text-[var(--color-subtle)]">
           {product.preorder ? "Preorder" : product.shipWindow}
         </p>
-        <div className="mt-2 flex items-center justify-between">
-          <span className="font-semibold">{formatCurrency(product.price)}</span>
-          {product.preorder && <Badge>Pre-order</Badge>}
+        <div className="mt-3 flex items-center justify-between gap-2">
+          <span className="font-mono text-base font-semibold text-[var(--color-ink)]">
+            {formatCurrency(product.price)}
+          </span>
+          {product.preorder && <Badge variant="preorder">Pre-order</Badge>}
           {!product.inStock && !product.preorder && (
-            <Badge className="bg-red-700">Sold out</Badge>
+            <Badge variant="soldout">Sold out</Badge>
           )}
         </div>
       </div>
